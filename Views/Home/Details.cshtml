@@ -1,0 +1,19 @@
+@model Products.Models.Product
+
+@* <h1> @Model.Name <small>by @Model.Brand.CompanyName</small></h1> *@
+
+<h1> @Model.Name </h1>
+
+@* <h3>@(String.Join(", ", Model.Categories.Select(c => c.Title)))</h3> *@
+
+<contentful-image url="@Model.Image.FirstOrDefault()?.File.Url" width="400" height="400"></contentful-image>
+
+<p>@Model.Description</p>
+
+<p>Size/Type/Color: @Model.Sizetypecolor</p>
+
+<p>SKU: @Model.SKU</p>
+
+<p>@Model.Quantity in stock</p>
+
+<p>Homepage: @Model.AvailableAt</p>

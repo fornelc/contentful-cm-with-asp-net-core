@@ -1,0 +1,37 @@
+﻿@using Contentful.Core.Models
+
+@model ContentfulCollection<Product>
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h1>Our Products</h1>
+
+<ul>
+    @foreach (var product in Model)
+    {
+        <li>
+            <p>@product.Name</p>
+            <p>@product.Slug</p>
+            <p>description: @product.Description</p>
+            <p>
+                <contentful-image url="@product.Image.First().File.Url" width="200" height="200" resize-behaviour="Pad" background-color="#cc0000" />
+            </p>
+            <p>
+                <strong>Tags:</strong> @foreach (var tag in product.Tags)
+                {
+                    <a class="btn" asp-controller="home" asp-action="bytag" asp-route-id="@tag">@tag</a>
+                }
+            </p>
+            <p class="bottom">
+                <a asp-controller="home" asp-action="details" asp-route-itemid="@product.Sys.Id" class="btn btn-primary" role="button">Read more...</a>
+            </p>
+        </li>
+    }
+</ul>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
