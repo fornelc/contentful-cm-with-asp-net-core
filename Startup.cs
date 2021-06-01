@@ -9,6 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Contentful.AspNetCore;
+using Nest;
+using Elasticsearch.Net;
+using Products.Models;
 
 namespace Products
 {
@@ -26,6 +29,18 @@ namespace Products
         {
             services.AddContentful(Configuration);
             services.AddControllersWithViews();
+            services.AddSingleton<IElasticClient>(sp =>
+            {
+                var config = sp.GetRequiredService<IConfiguration>();
+
+                var settings = new ConnectionSettings("enterprise-search-deployment:dXMtd2VzdDEuZ2NwLmNsb3VkLmVzLmlvJDllMjY4YzgxNzE3ZDQzYWViZTEwNTFjNWM3OWZiNDZmJDJiZmU1YTc4ZmI5ZjRjOGZiYzljNzlkYWYxOTE0Nzhi",
+                    new BasicAuthenticationCredentials(
+                        "elastic", "nzw8oH4A4caAIQXliYKC3bCi"))
+                        .DefaultIndex("contentful-entries")
+                        .DefaultMappingFor<Product>(i => i.IndexName("contentful-entries"));
+
+                return new ElasticClient(settings);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

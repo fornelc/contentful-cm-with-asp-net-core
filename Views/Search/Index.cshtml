@@ -1,0 +1,28 @@
+﻿@using Contentful.Core.Models
+
+@model Products.Models.DTO.ProductsResultDTO
+
+<form class="form-inline" asp-controller="Search" asp-action="Index" method="get">
+    <div class="form-group">
+        <label for="query">Query</label>
+        <input class="form-control" id="query" type="text" name="query" />
+    </div>
+    <button class="btn btn-default" type="submit">Search</button>
+</form>
+
+
+<ul>
+    @foreach (var result in Model.Results)
+    {
+    <li>
+        <p>@result.Name</p>
+        <p>
+            <contentful-image url="@result.Image.First().File.Url" width="200" height="200" resize-behaviour="Pad" background-color="#cc0000" />
+        </p>
+        <p>@result.Description</p>
+        <p class="bottom">
+            <a asp-controller="home" asp-action="details" asp-route-itemid="@result.Sys.Id" class="btn btn-primary" role="button">Read more...</a>
+        </p>
+    </li>
+    }
+</ul>

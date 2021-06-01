@@ -25,15 +25,17 @@ namespace Products.Controllers
 
         public async Task<IActionResult> Index()
         {
+            _logger.LogInformation("HomeController - Index() - start.");
             var qb = QueryBuilder<Product>.New.ContentTypeIs("product");
 
             var products = await _client.GetEntries<Product>(qb);
             return View(products);
         }
 
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(string itemid)
         {
-            var qb = QueryBuilder<Product>.New.ContentTypeIs("product").FieldEquals(f => f.Sys.Id, id);
+            _logger.LogInformation("HomeController - Details() - Retrieving details of product with id {Id}", itemid);
+            var qb = QueryBuilder<Product>.New.ContentTypeIs("product").FieldEquals(f => f.Sys.Id, itemid);
 
             var entry = (await _client.GetEntries<Product>(qb)).FirstOrDefault();
             return View(entry);

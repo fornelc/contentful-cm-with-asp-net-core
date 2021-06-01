@@ -5,7 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="contentful.aspnetcore" Version="6.0.6" />
+    <PackageReference Include="contentful.aspnetcore" Version="6.0.7" />
+    <PackageReference Include="Elasticsearch.Net" Version="7.13.0" />
+    <PackageReference Include="NEST" Version="7.13.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Search\" />
+    <Folder Include="Models\DTO\" />
+  </ItemGroup>
 </Project>
